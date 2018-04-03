@@ -22,6 +22,8 @@ module Cindy
 
   class AlreadySubscribed < Error; end
 
+  class SubscriberDoesNotExist < Error; end
+
   # Raised when Sendy returns a 400 HTTP status code
   class BadRequest < Error; end
 

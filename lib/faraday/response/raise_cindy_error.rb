@@ -11,10 +11,11 @@ module Faraday
         raise ::Cindy::AlreadySubscribed
       when /Invalid email address./i
         raise ::Cindy::InvalidEmailAddress
+      when /Already subscribed./i
+        raise ::Cindy::AlreadySubscribed
+      when /Subscriber does not exist./i
+        raise ::Cindy::SubscriberDoesNotExist
       end
-
-      # key = response[:status].to_i
-      # raise ERROR_MAP[key].new(response) if ERROR_MAP.has_key? key
     end
 
   end

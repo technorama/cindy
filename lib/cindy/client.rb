@@ -44,6 +44,14 @@ module Cindy
       !!(response.body =~ /^1$/)
     end
 
+    def delete_subscriber(list_id, email)
+      response = connection.post "api/subscribers/delete.php" do |req|
+        req.body = {list: list_id, email: email, api_key: @key}
+      end
+
+      !!(response.body =~ /^1$/)
+    end
+
     def subscription_status(list_id, email)
       response = connection.post "api/subscribers/subscription-status.php" do |req|
         req.body = {list_id: list_id, email: email, api_key: @key}
