@@ -30,9 +30,9 @@ module Cindy
 
     def subscribe(list_id, email, name = nil, custom_params = {})
       response = connection.post "subscribe" do |req|
-        params = {list: list_id, email: email, boolean: true}
-        params[:name] = name if name
-        params.merge! custom_params
+        opts = {list: list_id, email: email, boolean: true}
+        opts[:name] = name if name
+        params = opts.merge(custom_params)
         req.body = params
       end
 
