@@ -7,6 +7,7 @@ module Faraday
     def on_complete(response)
       case response[:body]
       when /No data passed/i
+        raise ::Cindy::NoDataPassed
       when /Already subscribed./i
         raise ::Cindy::AlreadySubscribed
       when /Invalid email address./i
