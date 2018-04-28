@@ -13,7 +13,7 @@ module Cindy
     def create_campaign(opts={})
       post_opts     = {}
       req_opts      = %i(from_name from_email reply_to subject html_text)
-      optional_opts = %i(plain_text list_ids brand_id send_campaign)
+      optional_opts = %i(plain_text list_ids brand_id send_campaign query_string title)
 
       req_opts.each do |opt|
         post_opts[opt] = opts.delete(opt) || raise(ArgumentError, "opt :#{opt} required")
