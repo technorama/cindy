@@ -69,6 +69,10 @@ module Cindy
       response.body.to_i
     end
 
+    def list(list_id)
+      List.new self, list_id
+    end
+
     protected
 
     def connection

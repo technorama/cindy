@@ -1,5 +1,6 @@
 require "cindy/version"
 require "cindy/client"
+require "cindy/list"
 require "cindy/error"
 
 module Cindy
