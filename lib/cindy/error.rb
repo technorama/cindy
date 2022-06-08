@@ -20,9 +20,15 @@ module Cindy
 
   class InvalidEmailAddress < Error; end
 
+  class InvalidCountry < Error; end
+
   class AlreadySubscribed < Error; end
 
   class SubscriberDoesNotExist < Error; end
+
+  class BouncedEmailAddress < Error; end
+
+  class EmailIsSuppressed < Error; end
 
   # Raised when Sendy returns a 400 HTTP status code
   class BadRequest < Error; end

@@ -16,9 +16,10 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^spec/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency("faraday", "~> 0.9")
-  gem.add_dependency('faraday_middleware', '~> 0.10')
-  gem.add_dependency('hashie', '~> 3.4')
+  gem.add_dependency("faraday")
+  gem.add_dependency('faraday-mashify')
+  gem.add_dependency('faraday-follow_redirects')
+  gem.add_dependency('hashie', ">= 3.4")
 
   gem.add_development_dependency("rake", "~> 10.4.2")
   gem.add_development_dependency("rspec", "~> 2.12.0")

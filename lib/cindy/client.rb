@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'faraday'
-require 'faraday_middleware'
+require 'faraday/mashify'
+require 'faraday/follow_redirects'
 require 'faraday/response/raise_cindy_error'
 
 module Cindy
   class Client
-
     def initialize(sendy_url, api_key = nil)
       @url = sendy_url
       @key = api_key || ENV['SENDY_API_KEY']
@@ -94,8 +96,8 @@ module Cindy
         faraday.adapter  Faraday.default_adapter
 
         faraday.use ::Faraday::Response::RaiseCindyError
-        faraday.use ::FaradayMiddleware::FollowRedirects
-        faraday.use ::FaradayMiddleware::Mashify
+        faraday.use ::Faraday::FollowRedirects::Middleware
+        faraday.response :mashify
       end
     end
 
