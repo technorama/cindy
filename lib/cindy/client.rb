@@ -69,8 +69,21 @@ module Cindy
       response.body.to_i
     end
 
+    def brand(brand_id)
+      Brand.new connection, brand_id
+    end
+
     def list(list_id)
       List.new self, list_id
+    end
+
+    def brands
+      response = connection.post "api/brands/get-brands.php" do |req|
+        req.body = {api_key: @key}
+      end
+
+      # TODO: Implement .brands
+      raise NotImplementedError.new("Implement .brands returning [Brand, ...]")
     end
 
     protected
