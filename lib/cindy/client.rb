@@ -9,7 +9,7 @@ module Cindy
   class Client
     def initialize(sendy_url, api_key = nil)
       @url = sendy_url
-      @key = api_key || ENV['SENDY_API_KEY']
+      @key = api_key || ENV['SENDY_API_KEY'] or raise ArgumentError.new("missing api_key and ENV['API_KEY']")
     end
 
     def create_campaign(opts={})
