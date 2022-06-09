@@ -34,17 +34,18 @@ module Cindy
       response = connection.post "subscribe" do |req|
         opts = {list: list_id, email: email, boolean: true}
         opts[:name] = name if name
+        opts[:api_key] = @key if @key
         params = opts.merge(custom_params)
         req.body = params
       end
 
-      !!(response.body =~ /^1$/)
+      check_response_1(response)
     end
 
     def unsubscribe(list_id, email)
       response = connection.post "unsubscribe", {list: list_id, email: email, boolean: true}
 
-      !!(response.body =~ /^1$/)
+      check_response_1(response)
     end
 
     def delete_subscriber(list_id, email)
@@ -52,7 +53,7 @@ module Cindy
         req.body = {list_id: list_id, email: email, api_key: @key}
       end
 
-      !!(response.body =~ /^1$/)
+      check_response_1(response)
     end
 
     def subscription_status(list_id, email)
@@ -91,7 +92,7 @@ module Cindy
     protected
 
     def connection
-      @connection ||= Faraday.new(:url => @url) do |faraday|
+      @connection ||= Faraday.new(url: @url) do |faraday|
         faraday.request  :url_encoded
         faraday.adapter  Faraday.default_adapter
 
@@ -101,5 +102,10 @@ module Cindy
       end
     end
 
+    def check_response_1(response)
+      body = response.body
+      raise Cindy::Error.new("unknown response #{body.inspect}") unless body == "1"
+      true
+    end
   end
 end
