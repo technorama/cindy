@@ -30,7 +30,8 @@ module Cindy
       response.body
     end
 
-    def subscribe(list_id, email, name = nil, custom_params = {})
+    # subscribe or raise
+    def subscribe!(list_id, email, name = nil, custom_params = {})
       response = connection.post "subscribe" do |req|
         opts = {list: list_id, email: email, boolean: true}
         opts[:name] = name if name
@@ -40,6 +41,17 @@ module Cindy
       end
 
       check_response_1(response)
+    rescue Cindy::AlreadySubscribed
+      true
+    end
+
+    # returns true when subscribed or previously subscribed
+    # returns false when BouncedEmailAddress, InvalidEmailAddress, EmailIsSuppressed
+    # raises on transient or other unspecified errors
+    def subscribe(list_id, email, name = nil, custom_params = {})
+      subscribe! list_id, email, name, custom_params
+    rescue Cindy::BouncedEmailAddress, Cindy::InvalidEmailAddress, Cindy::EmailIsSuppressed
+      false
     end
 
     def unsubscribe(list_id, email)
@@ -62,6 +74,8 @@ module Cindy
       end
 
       response.body
+    rescue Cindy::EmailDoesNotExistInList
+      nil
     end
 
     def active_subscriber_count(list_id)

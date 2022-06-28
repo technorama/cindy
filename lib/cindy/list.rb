@@ -9,6 +9,10 @@ module Cindy
       @id = list_id
     end
 
+    def subscribe!(email, name = nil, custom_params = {})
+      @cindy.subscribe @id, email, name, custom_params
+    end
+
     def subscribe(email, name = nil, custom_params = {})
       @cindy.subscribe @id, email, name, custom_params
     end
