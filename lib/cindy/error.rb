@@ -54,9 +54,6 @@ module Cindy
   # Raised when Sendy returns a 501 HTTP status code
   class NotImplemented < Error; end
 
-  # Raised when Sendy returns a 502 HTTP status code
-  class BadGateway < Error; end
-
-  # Raised when Sendy returns a 503 HTTP status code
-  class ServiceUnavailable < Error; end
+  # Raised when Sendy returns a temporary error (502/503/504 HTTP status code)
+  class TransientError < Error; end
 end

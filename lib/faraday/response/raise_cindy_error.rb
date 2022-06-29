@@ -9,6 +9,8 @@ module Faraday
         when 200
         when 404
           raise ::Cindy::NotFound.new(response.url)
+        when 502, 503, 504
+          raise ::Cindy::TransientError.new("status=#{status} #{response.url}")
         else
           raise ::Cindy::Error.new("unknown status #{status}, open a PR")
         end
