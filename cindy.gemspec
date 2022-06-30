@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency("faraday")
   gem.add_dependency('faraday-mashify')
   gem.add_dependency('faraday-follow_redirects')
+  gem.add_dependency('faraday-retry')
   gem.add_dependency('hashie', ">= 3.4")
 
   gem.add_development_dependency("rake", "~> 10.4.2")

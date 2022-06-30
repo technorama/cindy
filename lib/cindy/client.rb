@@ -3,13 +3,20 @@
 require 'faraday'
 require 'faraday/mashify'
 require 'faraday/follow_redirects'
+require 'faraday/retry'
 require 'faraday/response/raise_cindy_error'
 
 module Cindy
   class Client
-    def initialize(sendy_url, api_key = nil)
+    def initialize(sendy_url, api_key = nil, retry_options: {})
       @url = sendy_url
       @key = api_key || ENV['SENDY_API_KEY'] or raise ArgumentError.new("missing api_key and ENV['API_KEY']")
+
+      retry_statuses = (retry_options[:retry_statuses] || []) + [502, 503, 504]
+
+      @retry_options = retry_options.merge({
+        retry_statuses: retry_statuses
+      })
     end
 
     def create_campaign(opts={})
@@ -112,6 +119,7 @@ module Cindy
 
         faraday.use ::Faraday::Response::RaiseCindyError
         faraday.use ::Faraday::FollowRedirects::Middleware
+        faraday.request :retry, @retry_options
         faraday.response :mashify
       end
     end
